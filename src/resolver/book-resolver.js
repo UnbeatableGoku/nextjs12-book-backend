@@ -22,14 +22,20 @@ const resolvers = {
       return data;
     },
     comparebooks: async (parent, { compareBook }) => {
-      console.log(compareBook);
-      const allBooks = compareBook.map(async (item) => {
-        const { data } = await axios.get(
-          `https://www.googleapis.com/books/v1/volumes/${item}`
+      try {
+        const allBooks = await Promise.all(
+          compareBook.map(async (item) => {
+            const { data } = await axios.get(
+              `https://www.googleapis.com/books/v1/volumes/${item}`
+            );
+            return data;
+          })
         );
-        return data;
-      });
-      return allBooks;
+        return allBooks;
+      } catch (error) {
+        console.log(error);
+        throw error;
+      }
     },
   },
 };

@@ -39,6 +39,7 @@ const typeDefs = gql`
     authors: [String]
     averageRating: Float
     publishedDate: String
+    categories: [String]
   }
 
   type Img {
